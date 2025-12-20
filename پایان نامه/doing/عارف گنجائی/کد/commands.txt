@@ -1,0 +1,17 @@
+python3.11 -m venv .venv
+source .venv/bin/activate
+python --version (باید بگه ۳.۱۱)
+pip install -U pip
+pip install torch torchvision torchaudio
+pip install -U "transformers>=4.40" datasets accelerate peft trl tensorboard pyyaml
+python -c "import torch; print(torch.__version__); print('mps:', torch.backends.mps.is_available())"
+pip uninstall -y numpy
+pip install "numpy<2,>=1.26.4"
+python -c "import numpy as np; import torch; print('numpy:', np.__version__); print('torch:', torch.__version__); print('mps:', torch.backends.mps.is_available())"
+mkdir -p src configs runs
+touch src/adaptive_beta.py src/train_dpo_baseline.py
+
+------------------------------------------------------------------------
+pip install -U "transformers>=4.40" datasets accelerate trl peft tensorboard
+python -m src.train_dpo_baseline
+tensorboard --logdir runs
